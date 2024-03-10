@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Untitled</title>
+<script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
 	</head>
 	<body>
     
@@ -10,19 +11,31 @@
 const noteIndex = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
 
 function chooseKey() {
-  const startingNote = note_index[Math.trunc(Math.random() * 11.9999999999)];
+  const startingNote = Math.trunc(Math.random() * 11.9999999999);
   let keyPattern = [];
+  let scale = [];
   let patternCount = {1: 0, 2: 0};
   for (let i = 0; i<7; i++) {
-    if (patternCount[1] === 4) {
+    if (patternCount[1] === 2) {
       keyPattern.push(2);
       patternCount[2]++;
-    } else if (patternCount[2] === 4{
-        keyPatter.push(1);
+    } else if (patternCount[2] === 5){
+        keyPattern.push(1);
+        patternCount[1]++;
+    } else {
+      let number = Math.round((Math.random() + 1));
+      keyPattern.push(number);
+      patternCount[number]++;
     }
-    
+  scale.push(noteIndex[startingNote]);
+  for (i = 0; i<6; i++) {
+    scale.push(noteIndex[keyPattern[i]]);
+  }
+  console.log(scale);
   }
 }
+  
+  nn.on('load', chooseKey());
     
 </script>
 		
