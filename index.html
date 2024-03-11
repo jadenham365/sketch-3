@@ -9,11 +9,13 @@
     
 <script>
 const noteIndex = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
-
+let scale = [];
+let chordProg = [];
+let bpm;
+  
 function chooseKey() {
   const startingNote = Math.trunc(Math.random() * 11.9999999999);
   let keyPattern = [];
-  let scale = [];
   let patternCount = {1: 0, 2: 0};
   for (let i = 0; i<7; i++) {
     if (patternCount[1] === 2) {
@@ -27,15 +29,40 @@ function chooseKey() {
       keyPattern.push(number);
       patternCount[number]++;
     }
+  }
   scale.push(noteIndex[startingNote]);
+  let addIndex = startingNote
   for (i = 0; i<6; i++) {
-    scale.push(noteIndex[keyPattern[i]]);
+    addIndex += keyPattern[i]
+    scale.push(noteIndex[(addIndex % 12)])
   }
   console.log(scale);
-  }
 }
   
-  nn.on('load', chooseKey());
+function chooseChordProg() {
+  for (let i = 0; i<4; i++) {
+    let chord = [];
+    for (let j = 0; j<3; j++) {
+      let note = noteIndex[Math.trunc(Math.random() * 6.9999999999)];
+      while (chord.includes(note)) {
+        note = noteIndex[Math.trunc(Math.random() * 6.9999999999)];
+      }
+      chord.push(note);
+    }
+    chordProg.push(chord);
+  }
+  console.log(chordProg);
+}
+
+function setup() {
+  
+  chooseKey();
+  chooseChordProg();
+  
+}
+
+  
+nn.on('load', setup);
     
 </script>
 		
