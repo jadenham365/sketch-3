@@ -2,20 +2,39 @@
 <html lang="en-US">
 	<head>
 		<meta charset="utf-8">
-		<title>Untitled</title>
+		<title>Random Chord Progs</title>
 <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
 <script src="https://tonejs.github.io/build/Tone.js"></script>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Truculenta:opsz,wght@12..72,100..900&display=swap')
+</style>
+    
+<style>
+    
+  button {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Truculenta';
+  }
+    
+    </style>
 	</head>
 	<body>
+
+<h1 style="text-align: center; font-family: 'Truculenta'">click below for your very own funky random chord progression<br>ヽ(⌐■_■)ノ♪♬</h1>
+
+<button id="generate">GENERATE</button>
     
 <script>
 const chordSynth = new Tone.PolySynth().toDestination()
-const noteIndex = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
+const noteIndex = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#','A', 'A#', 'B'];
 let scale = [];
 let chordProg = [];
 let bpm;
   
 function chooseKey() {
+  scale = [];
   const startingNote = Math.trunc(Math.random() * 11.9999999999);
   let keyPattern = [];
   let patternCount = {1: 0, 2: 0};
@@ -42,6 +61,7 @@ function chooseKey() {
 }
   
 function chooseChordProg() {
+  chordProg = [];
   let startingNotes = [];
   for (let i = 0; i<4; i++) {
     let chord = [];
@@ -61,23 +81,26 @@ function chooseChordProg() {
   }
   console.log(chordProg);
 }
+  
+function play() {
+  for (let i = 0; i<4; i++) {
+    const chord = chordProg[i]
+    const time = Tone.now() + i * 1;
+    chordSynth.triggerAttackRelease(chord, '4n', time);
+  }
+}
 
-function setup() {
+function generate() {
   
   chooseKey();
   chooseChordProg();
   Tone.Transport.bpm.value = 120;
-  for (let i = 0; i<4; i++) {
-    const chord = chordProg[i]
-    const time = i * 1;
-    chordSynth.triggerAttackRelease(chord, '4n', time);
-  }
-  
+  play();
   
 }
-
   
-nn.on('load', setup);
+
+nn.get('button').on('click', generate)
     
 </script>
 		
