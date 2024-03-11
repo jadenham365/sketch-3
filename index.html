@@ -12,7 +12,7 @@
 <style>
     
   button {
-    position: absolute;
+    position: relative;
     left: 50%;
     transform: translate(-50%, -50%);
     font-family: 'Truculenta';
@@ -25,6 +25,9 @@
 <h1 style="text-align: center; font-family: 'Truculenta'">click below for your very own funky random chord progression<br>ヽ(⌐■_■)ノ♪♬</h1>
 
 <button id="generate">GENERATE</button>
+<button id="play">
+  PLAY AGAIN
+    </button>
     
 <script>
 const chordSynth = new Tone.PolySynth().toDestination()
@@ -94,13 +97,18 @@ function generate() {
   
   chooseKey();
   chooseChordProg();
+  document.querySelectorAll('h2').forEach(e => e.remove())
+  nn.create('h2').content(`Scale: <br>${scale[0]}, ${scale[1]}, ${scale[2]}, ${scale[3]}, ${scale[4]}, ${scale[5]}, ${scale[6]}`).css({ color: 'black'}).addTo('body')
+  nn.create('h2').content(`Chord Progression: <br>${chordProg[0][0]}, ${chordProg[0][1]}, ${chordProg[0][2]}<br>${chordProg[1][0]}, ${chordProg[1][1]}, ${chordProg[1][2]}<br>${chordProg[2][0]}, ${chordProg[2][1]}, ${chordProg[2][2]}<br>${chordProg[3][0]}, ${chordProg[3][1]}, ${chordProg[3][2]}`).css({ color: 'black'}).addTo('body')
   Tone.Transport.bpm.value = 120;
   play();
+  
   
 }
   
 
-nn.get('button').on('click', generate)
+nn.get('#generate').on('click', generate)
+nn.get('#play').on('click', play)
     
 </script>
 		
