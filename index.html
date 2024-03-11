@@ -40,15 +40,21 @@ function chooseKey() {
 }
   
 function chooseChordProg() {
+  let startingNotes = [];
   for (let i = 0; i<4; i++) {
     let chord = [];
-    for (let j = 0; j<3; j++) {
-      let note = noteIndex[Math.trunc(Math.random() * 6.9999999999)];
-      while (chord.includes(note)) {
-        note = noteIndex[Math.trunc(Math.random() * 6.9999999999)];
-      }
-      chord.push(note);
+    let note = Math.trunc(Math.random() * 6.9999999999);
+    while (startingNotes.includes(note)) {
+      note = Math.trunc(Math.random() * 6.9999999999);
     }
+    startingNotes.push(note);
+    chord.push(noteIndex[note] + '4');
+    note += 2
+    note %= 7
+    chord.push(noteIndex[note] + '4');
+    note += 2
+    note %= 7
+    chord.push(noteIndex[note] + '4');
     chordProg.push(chord);
   }
   console.log(chordProg);
