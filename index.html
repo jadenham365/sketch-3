@@ -4,10 +4,12 @@
 		<meta charset="utf-8">
 		<title>Untitled</title>
 <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
+<script src="https://tonejs.github.io/build/Tone.js"></script>
 	</head>
 	<body>
     
 <script>
+const chordSynth = new Tone.PolySynth().toDestination()
 const noteIndex = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
 let scale = [];
 let chordProg = [];
@@ -64,7 +66,14 @@ function setup() {
   
   chooseKey();
   chooseChordProg();
-  let bpm = Math.round((Math.random() * 60) + 90)
+  const bpm = Math.round((Math.random() * 60) + 90)
+  Tone.Transport.bpm.value = bpm
+  for (let i = 0; i<4; i++) {
+    const chord = chordProg[i]
+    const time = i * 2;
+    chordSynth.triggerAttackRelease(chord, '2n', time);
+  }
+  
   
 }
 
